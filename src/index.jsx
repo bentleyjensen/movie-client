@@ -1,14 +1,14 @@
 import React from 'react';
-import ReactDom from 'react-dom';
+import ReactDOM from 'react-dom';
 
 // import for bundle reasons
-import './index.sxcss';
+import './index.scss';
 
 // Main component
 class MovieApplication extends React.Component {
     render() {
         return (
-            <div classname='movie-client'>
+            <div className='movie-client'>
                 <div>Good morning</div>
             </div>
         )
