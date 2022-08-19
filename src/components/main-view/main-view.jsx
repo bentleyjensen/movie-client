@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import 'dotenv/config';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 
@@ -6,26 +8,15 @@ export class MainView extends React.Component {
     constructor() {
         super();
         this.state = {
-            movies: [
-                {_id: 1, title: 'Inception', description: 'desc1...', imagePath: "..."},
-                {_id: 2, title: 'The Avengers', description: 'desc2...', imagePath: "..."},
-                {_id: 3, title: 'The Illustionist', description: 'desc3...', imagePath: "..."},
-            ],
+            movies: [],
             selectedMovie: null,
         }
     }
 
-    setSelectedMovie(newSelectedMovie) {
-        this.setState({
-            selectedMovie: newSelectedMovie,
-        })
-    }
-
-
     render() {
         const { movies, selectedMovie } = this.state;
 
-        if (movies.length === 0) return <div className="main-view">The list is empty!</div>;
+        if (movies.length === 0) return <div className="main-view"></div>;
 
         if (selectedMovie) return <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => this.setSelectedMovie(newSelectedMovie)}/>;
 
@@ -34,5 +25,20 @@ export class MainView extends React.Component {
                 {movies.map(movie => <MovieCard key={movie._id} movie={movie} onMovieClick={(movie) => this.setSelectedMovie(movie)}/>)}
             </div>
         );
+    }
+
+    componentDidMount() {
+        axios.get(process.env.dbHost)
+        .then(response => {
+            this.setState({
+                movies: response.data,
+            });
+        });
+    }
+
+    setSelectedMovie(newSelectedMovie) {
+        this.setState({
+            selectedMovie: newSelectedMovie,
+        })
     }
 }
