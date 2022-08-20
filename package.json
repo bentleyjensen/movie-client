@@ -5,7 +5,9 @@
   "default": "src/index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel src/index.html"
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html",
+    "heroku-postbuild": "parcel build src/index.html"
   },
   "repository": {
     "type": "git",
@@ -20,7 +22,8 @@
   "dependencies": {
     "axios": "^0.27.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "parcel-bundler" : "^2.0.0"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.0.0-rc.0"
