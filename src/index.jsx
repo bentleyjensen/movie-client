@@ -13,7 +13,7 @@ class MovieApplication extends React.Component {
         )
     }
 }
-
+// Test comment
 // Locate root
 const container = document.getElementsByClassName('app-container')[0];
 
