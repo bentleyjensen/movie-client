@@ -38,7 +38,7 @@ export function LoginView(props) {
     )
 }
 
-LoginView.PropTypes = {
+LoginView.propTypes = {
     onLoggedIn: PropTypes.func,
     showRegistration: PropTypes.func,
 }
