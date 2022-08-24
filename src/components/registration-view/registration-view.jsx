@@ -93,13 +93,13 @@ export function RegistrationView (props) {
     }
 
     return (
-        <div class="registration-container">
+        <div className="registration-container">
             <form>
                 <label>
                     Choose your new username (8+ characters):
                     <br />
                     <input type="text" value={username} onChange={event => { setUsername(event.target.value); checkUsernameLength(event.target.value)}} />
-                    <div id="username-error" class="error">{usernameMessage}</div>
+                    <div id="username-error" className="error">{usernameMessage}</div>
                 </label>
                 <br />
                 <br />
@@ -107,7 +107,7 @@ export function RegistrationView (props) {
                     Choose your new password (8+ characters, including an uppercase letter, a lowercase letter,  a number and a symbol)
                     <br />
                     <input type="text" value={password1} onChange={event => { setPassword1(event.target.value); checkStrongPassword(event.target.value);}} />
-                    <div id="password1-error" class="error">{strongPasswordMessage}</div>
+                    <div id="password1-error" className="error">{strongPasswordMessage}</div>
                 </label>
                 <br />
                 <br />
@@ -115,7 +115,7 @@ export function RegistrationView (props) {
                     Verify your password:
                     <br />
                     <input type="text" value={password2} onChange={event => { setPassword2(event.target.value); checkPasswordMatch(event.target.value)}} />
-                    <div id="password2-error" class="error">{passwordMatchMessage}</div>
+                    <div id="password2-error" className="error">{passwordMatchMessage}</div>
                 </label>
                 <br />
                 <br />
@@ -133,7 +133,7 @@ export function RegistrationView (props) {
                 </label>
             </form>
             <button type="submit" onClick={handleSubmit}>Submit</button>
-            <div id="submit-error" class="error">{submitError}</div>
+            <div id="submit-error" className="error">{submitError}</div>
         </div>
     )
 }
