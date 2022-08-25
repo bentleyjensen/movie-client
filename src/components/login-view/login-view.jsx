@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button'
 
 import './login-view.scss';
 
@@ -19,21 +21,21 @@ export function LoginView(props) {
 
     return (
         <div>
-            <form>
-                <label>
-                    Username:
-                    <input type="text" value={username} onChange={event => setUsername(event.target.value)} />
-                </label>
+            <Form>
+                <Form.Group controlId="form-username">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control type="text" onChange={event => setUsername(event.target.value)} />
+                </Form.Group>
                 <br />
-                <label>
-                    Password:
-                    <input type="password" value={password} onChange={event => setPassword(event.target.value)} />
-                </label>
+                <Form.Group controlId="form-password">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" onChange={event => setPassword(event.target.value)} />
+                </Form.Group>
                 <br />
-                <button type="submit" onClick={handleSubmit}>Log In</button>
-            </form>
+                <Button variant="primary" type="submit" onClick={handleSubmit}>Login</Button>
+            </Form>
             <br />
-            <button type="button" onClick={() => props.showRegistration(true)}>Register as a new user</button>
+            <Button variant="secondary" type="button" onClick={() => props.showRegistration(true)}>Register as a new user</Button>
         </div>
     )
 }
