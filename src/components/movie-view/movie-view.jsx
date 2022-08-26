@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Row from  'react-bootstrap/Row'
+import Col from  'react-bootstrap/Col'
+import Button from  'react-bootstrap/Button'
 
 import './movie-view.scss'
 
@@ -7,35 +10,28 @@ export class MovieView extends React.Component {
     render() {
         const { movie, onBackClick } = this.props;
         const imgPath = movie.ImgPath || "";
+
         return (
-            <div className="movie-view">
-                <button onClick={ () => onBackClick(null)}>Back</button>
-                <br />
-                <br />
-                <div className="movie-poster">
+            <Row className="movie-view">
+                <Col md={12}>
+                    <Button onClick={ () => onBackClick(null)}>Back</Button>
+                </Col>
+                <Col className="movie-poster my-3" md={3}>
                     <img src={imgPath}/>
-                </div>
-                <div className="movie-title">
-                    <span className="value">{movie.title}</span>
-                </div>
-                <div className="movie-year-genre">
-                    <span className="value">{movie.year} </span>-
-                    <span className="value"> {movie.genre.name}</span>
-                </div>
-                <div className="movie-director">
-                    <span className="label">Directed by </span>
-                    <span className="value">{movie.director.name}</span>
-                </div>
-                <br />
-                <div className="movie-description">
-                    <span className="value">{movie.description}</span>
-                </div>
-            </div>
+                </Col>
+                <Col md={9}></Col>
+                <Col md={12}>
+                    <h1>{movie.title}</h1>
+                    <p className="text-muted my-0">{movie.year} {movie.genre.name}</p>
+                    <p className="text-muted">Directed by {movie.director.name}</p>
+                    <p className="text-dark">{movie.description}</p>
+                </Col>
+            </Row>
         );
     }
 }
 
-MovieView.PropTypes = {
+MovieView.propTypes = {
     movie: PropTypes.shape({
         title: PropTypes.string.isRequired,
         year: PropTypes.number.isRequired,
@@ -50,6 +46,7 @@ MovieView.PropTypes = {
             bio: PropTypes.string,
             movies: PropTypes.array,
         }),
+        imgPath: PropTypes.string,
     }).isRequired,
     onBackClick: PropTypes.func.isRequired,
 }

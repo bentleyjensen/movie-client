@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import './registration-view.scss';
 
@@ -93,48 +97,35 @@ export function RegistrationView (props) {
     }
 
     return (
-        <div className="registration-container">
-            <form>
-                <label>
-                    Choose your new username (8+ characters):
-                    <br />
-                    <input type="text" value={username} onChange={event => { setUsername(event.target.value); checkUsernameLength(event.target.value)}} />
-                    <div id="username-error" className="error">{usernameMessage}</div>
-                </label>
-                <br />
-                <br />
-                <label>
-                    Choose your new password (8+ characters, including an uppercase letter, a lowercase letter,  a number and a symbol)
-                    <br />
-                    <input type="text" value={password1} onChange={event => { setPassword1(event.target.value); checkStrongPassword(event.target.value);}} />
-                    <div id="password1-error" className="error">{strongPasswordMessage}</div>
-                </label>
-                <br />
-                <br />
-                <label>
-                    Verify your password:
-                    <br />
-                    <input type="text" value={password2} onChange={event => { setPassword2(event.target.value); checkPasswordMatch(event.target.value)}} />
-                    <div id="password2-error" className="error">{passwordMatchMessage}</div>
-                </label>
-                <br />
-                <br />
-                <label>
-                    Email Address:
-                    <br />
-                    <input type="text" value={email} onChange={event => setEmail(event.target.value)} />
-                </label>
-                <br />
-                <br />
-                <label>
-                    Birthdate:
-                    <br />
-                    <input type="text" value={birthdate} onChange={event => setBirthdate(event.target.value)} />
-                </label>
-            </form>
-            <button type="submit" onClick={handleSubmit}>Submit</button>
-            <div id="submit-error" className="error">{submitError}</div>
-        </div>
+        <Row className="registration-container">
+            <Form>
+                <Form.Group>
+                    <Form.Label>Username:</Form.Label>
+                    <Form.Control type="text" value={username} onChange={event => { setUsername(event.target.value); checkUsernameLength(event.target.value) }}/>
+                    <Form.Text id="username-error" className="text-danger">{usernameMessage}</Form.Text>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Password:</Form.Label>
+                    <Form.Control type="password" value={password1} onChange={event => { setPassword1(event.target.value); checkStrongPassword(event.target.value); }} />
+                    <Form.Text id="password1-error" className="text-danger">{strongPasswordMessage}</Form.Text>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Confirm Password:</Form.Label>
+                    <Form.Control type="password" value={password2} onChange={event => { setPassword2(event.target.value); checkPasswordMatch(event.target.value) }} />
+                    <Form.Text id="password2-error" className="text-danger">{passwordMatchMessage}</Form.Text>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Email Address:</Form.Label>
+                    <Form.Control type="text" value={email} onChange={event => setEmail(event.target.value)} />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Birthdate (yyyy/mm/dd):</Form.Label>
+                    <Form.Control type="text" value={birthdate} onChange={event => setBirthdate(event.target.value)} />
+                </Form.Group>
+                <Button type="submit" className="mt-3" onClick={handleSubmit}>Submit</Button>
+                <Form.Text id="submit-error" className="text-danger">{submitError}</Form.Text>
+            </Form>
+        </Row>
     )
 }
 
