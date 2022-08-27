@@ -41,7 +41,7 @@ export class MainView extends React.Component {
     }
 
     componentDidMount() {
-        axios.get(process.env.dbHost)
+        axios.get(`${process.env.API_URL}/movies`)
         .then(response => {
             this.setState({
                 movies: response.data,

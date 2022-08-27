@@ -10,7 +10,7 @@ export class MovieCard extends React.Component {
         const { movie, onMovieClick } = this.props;
         return (
             <Card className="justify-content-center">
-                <Card.Img style={{ 'min-height': '150px' }}className="margin-auto" variant="top" src={`${process.env.imageHost}${movie._id}.jpg`} alt={movie.title + ' poster'} />
+                <Card.Img style={{ 'min-height': '150px' }} className="margin-auto" variant="top" src={`${process.env.API_URL}/images/${movie._id}.jpg`} alt={movie.title + ' poster'} />
                 <Card.Body>
                     <Card.Title>{movie.title}</Card.Title>
                     <Card.Body>{movie.description.slice(0,100)}...</Card.Body>
