@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 
-export class Navbar extends React.Component {
-    render() {
+export function Navbar(props) {
+    return (
         <Navbar expand="lg" bg="dark" variant="dark" md={12}>
             <Navbar.Brand href="#home">Movie Client</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -21,5 +21,5 @@ export class Navbar extends React.Component {
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
-    }
+    );
 }

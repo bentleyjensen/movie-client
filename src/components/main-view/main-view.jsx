@@ -93,7 +93,7 @@ export class MainView extends React.Component {
             this.setState({ movies: response.data });
         })
         .catch((err) => {
-            console.log(error);
+            console.log(err);
         });
     }
 }
