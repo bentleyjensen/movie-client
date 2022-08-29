@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel serve src/index.html",
-    "build": "npm i --location=global parcel@next;parcel build src/index.html"
+    "heroku-prebuild": "npm i --location=global parcel@next",
+    "heroku-postbuild": "parcel src/index.html"
   },
   "repository": {
     "type": "git",
@@ -27,5 +28,9 @@
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.0.0-rc.0"
+  },
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x"
   }
 }
