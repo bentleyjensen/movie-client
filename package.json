@@ -6,8 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel serve src/index.html",
-    "heroku-prebuild": "npm i --location=global parcel@next",
-    "heroku-postbuild": "parcel src/index.html"
+    "heroku-prebuild": "npm i --location=global parcel@next"
   },
   "repository": {
     "type": "git",
