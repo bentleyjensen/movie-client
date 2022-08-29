@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import { Navbar } from '../navbar/navbar';
+
 import Row from  'react-bootstrap/Row'
 import Col from  'react-bootstrap/Col'
 import Button from  'react-bootstrap/Button'
@@ -12,6 +15,12 @@ export class MovieView extends React.Component {
         const imgPath = movie.ImgPath || "";
 
         return (
+        <>
+            <Row>
+                <Col md={12}>
+                    <Navbar md={12} />
+                </Col>
+            </Row>
             <Row className="movie-view">
                 <Col md={12}>
                     <Button onClick={ () => onBackClick(null)}>Back</Button>
@@ -27,6 +36,7 @@ export class MovieView extends React.Component {
                     <p className="text-dark">{movie.description}</p>
                 </Col>
             </Row>
+        </>
         );
     }
 }
