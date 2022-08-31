@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-import { Navbar } from '../navbar/navbar';
-
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+
+import { Link } from 'react-router-dom';
 
 import './login-view.scss';
 
@@ -53,36 +54,47 @@ export function LoginView(props) {
         });
     }
 
-    return (
-        <>
-            <Row>
-                <Col md={12}>
-                    <Navbar md={12} />
-                </Col>
-            </Row>
+    return ( 
+        <Container>
             <Row className="justify-content-md-center mt-5">
+                <Col />
                 <Col md={4} className="justify-content-md-center mt-5">
-                    <Form>
-                        <Form.Group controlId="form-username">
-                            <Form.Label>Username:</Form.Label>
-                            <Form.Control type="text" onChange={event => setUsername(event.target.value)} />
-                        </Form.Group>
-                        <Form.Group controlId="form-password">
-                            <Form.Label>Password:</Form.Label>
-                            <Form.Control type="password" onChange={event => setPassword(event.target.value)} />
-                        </Form.Group>
-                        <Button variant="primary" type="submit" className="my-3" onClick={handleSubmit}>Login</Button>
-                        <Form.Text className="text-danger">{loginError}</Form.Text>
-                    </Form>
-                    <br />
-                    <Button variant="secondary" type="button" onClick={() => props.showRegistration(true)}>Register as a new user</Button>
+                    <Container fluid>
+                        <Form>
+                            <Form.Group controlId="form-username">
+                                <Form.Label>Username:</Form.Label>
+                                <Form.Control type="text" onChange={event => setUsername(event.target.value)} />
+                            </Form.Group>
+                            <Form.Group controlId="form-password">
+                                <Form.Label>Password:</Form.Label>
+                                <Form.Control type="password" onChange={event => setPassword(event.target.value)} />
+                            </Form.Group>
+                                <Row>
+                                    <Col>
+                                        <Button variant="primary" type="submit" className="my-3" onClick={handleSubmit}>Login</Button>
+                                    </Col>
+                                    <Col className="text-right">
+                                        <Link to="/registration">
+                                            <Button variant="secondary" type="button" className="text-right my-3">Register</Button>
+                                        </Link>
+                                    </Col>
+                                </Row>
+                            
+                            <Form.Text className="text-danger">{loginError}</Form.Text>
+                        </Form>
+                    </Container>
                 </Col>
+                <Col />
             </Row>
-        </>
+            <Row>
+                <Col />
+                
+                <Col />
+            </Row>
+        </Container>
     )
 }
 
 LoginView.propTypes = {
     onLoggedIn: PropTypes.func,
-    showRegistration: PropTypes.func,
 }

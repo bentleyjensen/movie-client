@@ -1,10 +1,15 @@
 import React from 'react';
+import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import axios from 'axios';
 import 'dotenv/config';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { LoginView } from '../login-view/login-view';
+import { LogoutView } from '../logout-view/logout-view';
 import { RegistrationView } from '../registration-view/registration-view';
+import { DirectorView } from '../director-view/director-view';
+import { GenreView } from '../genre-view/genre-view';
+import { UserView } from '../user-view/user-view';
 import { Navbar } from '../navbar/navbar';
 import { Col, Row } from 'react-bootstrap';
 
@@ -15,58 +20,91 @@ export class MainView extends React.Component {
         super();
         this.state = {
             movies: [],
-            selectedMovie: null,
             user: null,
-            register: false,
         }
     }
 
     render() {
-        const { movies, selectedMovie, user, register } = this.state;
+        const { movies, user } = this.state;
 
-        if (!user && !register) return (<LoginView
-            onLoggedIn={newUser => this.onLoggedIn(newUser)}
-            showRegistration={reg => this.showRegistration(reg)} />
-        )
+        
+        return (
+            <Router>
+                <Row className="row-fluid">
+                    <Col md={12}>
+                        <Navbar md={12} loggedIn={!!localStorage.getItem('token')} />
+                    </Col>
+                </Row>
+                <Row className='justify-content-md-center main-view mt-3 mx-1'>
+                    <Route exact path="/" render={() => {
+                        if (movies.length === 0) { return }
+                        else {
+                            return movies.map(m => <Col md={4} key={m._id} className="my-3">
+                                <MovieCard key={m._id} movie={m} />
+                            </Col>)
+                        }
+                    }} />
 
-        if (register) return (
-        <RegistrationView
-            onRegistered={() => this.showRegistration(false)}
-            onBackClick={(reg) => this.showRegistration(reg)} />
-        )
+                    <Route exact path="/register" render={({history}) => {
+                        <RegistrationView
+                            onRegistered={() => this.showRegistration(false)}
+                            onBackClick={() => history.goBack()}
+                        />
+                    }} />
 
-        if (movies.length === 0) return <Row className='justify-content-md-center main-view mt-5'></Row>;
+                    <Route exact path="/login" render={() => {
+                        const token = localStorage.getItem('token')
+                        if (token)
+                            return <Redirect to="/user" />
+                        return <LoginView onLoggedIn={newUser => this.onLoggedIn(newUser)} />
+                    }} />
 
-        if (selectedMovie) return (
-            <MovieView movie={selectedMovie} onBackClick={newSelectedMovie => this.setSelectedMovie(newSelectedMovie)} />
+                    <Route exact path="/logout" render={() => {
+                        return <LogoutView />
+                    }} >
+                    </Route>
+
+                    <Route path="/movies/:movieId" render={({match, history}) => {
+                        return (
+                            <MovieView
+                                movie={movies.find(m => m._id === match.params.movieId)}
+                                onBackClick={() => history.goBack() }
+                            />
+                        )
+                    }} />
+
+                    <Route path="/genre/:name" render={({match}) => {
+                        return <GenreView genre={match.params.name} />
+                    }} />
+
+                    <Route path="/director/:name" render={({match}) => {
+                        return <DirectorView director={match.params.name} />
+                    }} />
+
+                    <Route path="/user" render={() => {
+                        const storageToken = localStorage.getItem('token');
+                        
+                        // Check localStorage and state
+                        if (!storageToken) {
+                            return <LoginView onLoggedIn={newUser => this.onLoggedIn(newUser)} />
+                        } else {
+                            return <UserView />
+                        }
+                    }} />
+                </Row>
+            </Router>
         );
-
-        return (<>
-            <Row>
-                <Col md={12}>
-                    <Navbar md={12} />
-                </Col>
-            </Row>
-            <Row className='justify-content-md-center main-view mt-5'>
-                {movies.map(movie => <Col md={3} key={movie._id} className="my-3"><MovieCard key={movie._id} movie={movie} onMovieClick={(movie) => this.setSelectedMovie(movie)}/></Col>)}
-            </Row>
-        </>);
     }
 
     componentDidMount() {
         const user = localStorage.getItem('user');
         const token = localStorage.getItem('token');
 
-        if (token !== null) {
-            this.setState({user: user});
-            this.getMovies(token);
-        }
-    }
-
-    setSelectedMovie(newSelectedMovie) {
-        this.setState({
-            selectedMovie: newSelectedMovie,
-        })
+        // if (token !== null) {
+        //     this.setState({user: user});
+        //     this.getMovies(token);
+        // }
+        this.getMovies(token);
     }
 
     onLoggedIn(authData) {
@@ -74,15 +112,20 @@ export class MainView extends React.Component {
             user: authData.username,
         });
 
+        console.log("Authdata", authData)
+
         localStorage.setItem('token', authData.token);
         localStorage.setItem('user', authData.username);
         this.getMovies(authData.token);
     }
 
-    showRegistration(reg) {
+    onLoggedOut() {
         this.setState({
-            register: reg
-        })
+            user: null,
+            token: null,
+        });
+        localStorage.setItem('token',null);
+        localStorage.setItem('user',null);
     }
 
     getMovies(token) {

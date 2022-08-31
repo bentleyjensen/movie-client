@@ -10,7 +10,7 @@ import './index.scss';
 class MovieApplication extends React.Component {
     render() {
         return (
-            <Container>
+            <Container fluid>
                 <MainView />
             </Container>
         )
