@@ -45,9 +45,15 @@ export class MainView extends React.Component {
                     }} />
 
                     <Route exact path="/register" render={({history}) => {
+                        const token = localStorage.getItem(token);
+                        const user = localStorage.getItem(user);
+
+                        if (token) {
+                            return <Redirect to="/user"/>;
+                        }
+                        
                         return (
                             <RegistrationView
-                                onRegistered={() => this.showRegistration(false)}
                                 onBackClick={() => history.goBack()}
                             />
                         )
