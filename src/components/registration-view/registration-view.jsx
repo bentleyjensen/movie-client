@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 import { Navbar } from '../navbar/navbar';
 
@@ -108,21 +109,30 @@ export function RegistrationView (props) {
         event.preventDefault();
         console.log(username, password1, email, birthdate);
 
-        // the if statement short circuits, so run all of these here
-        checkPasswordMatch(password2);
-        checkStrongPassword(password1);
-        checkUsernameLength(username);
-        checkEmail(email);
-        checkBirthdate(birthdate);
+        const hasMatchPass = checkPasswordMatch(password2);
+        const hasStrongPass = checkStrongPassword(password1);
+        const hasUser = checkUsernameLength(username);
+        const hasEmail = checkEmail(email);
+        const hasBirthdate = checkBirthdate(birthdate);
 
-        if (!checkPasswordMatch(password2)
-            || !checkStrongPassword(password1)
-            || !checkUsernameLength(username)
-            || !checkEmail(email)
-            || !checkBirthdate(birthdate)) {
+        if (!hasMatchPass
+            || !hasStrongPass
+            || !hasUser
+            || !hasEmail
+            || !hasBirthdate) {
             setSubmitError('Cannot submit. Please check for errors above.');
         } else {
             // Send request to create user
+            axios.post(`${process.env.API_URL}/user/register`, {
+                username,
+                password1,
+                email,
+                birthdate,
+            }).then(() => {
+
+            }).catch((err) => {
+                setSubmitError(err.message);
+            })
             // See if user was created successfully
             // Display errors if necessary
 
