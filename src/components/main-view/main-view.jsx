@@ -27,7 +27,6 @@ export class MainView extends React.Component {
     render() {
         const { movies, user } = this.state;
 
-        
         return (
             <Router>
                 <Row className="row-fluid">
@@ -73,13 +72,14 @@ export class MainView extends React.Component {
                         )
                     }} />
 
-                    <Route path="/genre/:name" render={({match}) => {
-                        return <GenreView genre={match.params.name} />
+                    <Route path="/genres/:name" render={({match, history}) => {
+                        return <GenreView genre={match.params.name} onBackClick={() => history.goBack()} />
                     }} />
 
-                    <Route path="/director/:name" render={({match}) => {
-                        return <DirectorView director={match.params.name} />
+                    <Route path="/directors/:name" render={({match, history}) => {
+                        <DirectorView director={match.params.name} onBackClick={() => history.goBack()} />
                     }} />
+                    
 
                     <Route path="/user" render={() => {
                         const storageToken = localStorage.getItem('token');
@@ -129,6 +129,10 @@ export class MainView extends React.Component {
     }
 
     getMovies(token) {
+        token = token || localStorage.getItem('token');
+
+        if (!token) return;
+
         axios.get(`${process.env.API_URL}/movies`, {
             headers: { Authorization: `Bearer ${token}` }
         })

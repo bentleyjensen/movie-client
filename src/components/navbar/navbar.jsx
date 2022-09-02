@@ -13,7 +13,7 @@ export function Navbar(props) {
                     <Nav.Link href="/user">Profile</Nav.Link>
                     {props.loggedIn ?
                         <Nav.Link href="/logout">Log Out</Nav.Link>
-                        : <Nav.Link href="/logout">Log In</Nav.Link>
+                        : <Nav.Link href="/login">Log In</Nav.Link>
                     }
                     <NavDropdown title="More" id="basic-nav-dropdown">
                         <NavDropdown.Item href="/">Home</NavDropdown.Item>
