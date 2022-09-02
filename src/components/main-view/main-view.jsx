@@ -97,14 +97,7 @@ export class MainView extends React.Component {
     }
 
     componentDidMount() {
-        const user = localStorage.getItem('user');
-        const token = localStorage.getItem('token');
-
-        // if (token !== null) {
-        //     this.setState({user: user});
-        //     this.getMovies(token);
-        // }
-        this.getMovies(token);
+        this.getMovies();
     }
 
     onLoggedIn(authData) {
@@ -116,7 +109,6 @@ export class MainView extends React.Component {
 
         localStorage.setItem('token', authData.token);
         localStorage.setItem('user', authData.username);
-        this.getMovies(authData.token);
     }
 
     onLoggedOut() {
@@ -128,14 +120,8 @@ export class MainView extends React.Component {
         localStorage.setItem('user',null);
     }
 
-    getMovies(token) {
-        token = token || localStorage.getItem('token');
-
-        if (!token) return;
-
-        axios.get(`${process.env.API_URL}/movies`, {
-            headers: { Authorization: `Bearer ${token}` }
-        })
+    getMovies() {
+        axios.get(`${process.env.API_URL}/movies`,)
         .then((response) => {
             this.setState({ movies: response.data });
         })
