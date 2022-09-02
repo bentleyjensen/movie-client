@@ -13,7 +13,6 @@ import Col from 'react-bootstrap/Col';
 import './registration-view.scss';
 
 export function RegistrationView (props) {
-    console.log("Registration")
     const [username, setUsername] = useState('');
     const [usernameMessage, setUsernameMessage] = useState('');
     const [password1, setPassword1] = useState('');
@@ -49,8 +48,11 @@ export function RegistrationView (props) {
         const hasSym = password.match(/[^a-zA-Z0-9]/);
         const isLong = password.length >= 8;
 
-        if (password2.length > 0)
-            checkPasswordMatch();
+        const isValid = hasLower
+        && hasUpper
+        && hasNum
+        && hasSym
+        && isLong;
 
         errMessage =(<div>
             {!hasLower && <p>Missing lowercase letter</p>}
@@ -62,7 +64,7 @@ export function RegistrationView (props) {
 
         setStrongPasswordMessage(errMessage);
 
-        return !errMessage;
+        return isValid;
     }
 
     const checkPasswordMatch = (password) => {
@@ -116,7 +118,6 @@ export function RegistrationView (props) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(username, password1, email, birthdate);
 
         const hasMatchPass = checkPasswordMatch(password2);
         const hasStrongPass = checkStrongPassword(password1);
@@ -137,18 +138,13 @@ export function RegistrationView (props) {
                 password1,
                 email,
                 birthdate,
-            }).then(() => {
+            }).then((response) => {
+                console.log(response.data);
+                // window.open('/', '_self');
 
             }).catch((err) => {
-                setSubmitError(err.message);
-            })
-
-            // pass values back
-            props.onRegistered({
-                username,
-                password1,
-                email,
-                birthdate
+                err.response.data.errors[0].msg
+                setSubmitError(<p>{err.message}<br />{err.response.data.errors[0].msg}</p>);
             });
         }
     }
