@@ -48,6 +48,10 @@ export function RegistrationView (props) {
         const hasNum = password.match(/[0-9]/);
         const hasSym = password.match(/[^a-zA-Z0-9]/);
         const isLong = password.length >= 8;
+
+        if (password2.length > 0)
+            checkPasswordMatch();
+
         errMessage =(<div>
             {!hasLower && <p>Missing lowercase letter</p>}
             {!hasUpper && <p>Missing uppercase letter</p>}
