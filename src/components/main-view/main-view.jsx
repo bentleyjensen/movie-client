@@ -45,10 +45,12 @@ export class MainView extends React.Component {
                     }} />
 
                     <Route exact path="/register" render={({history}) => {
-                        <RegistrationView
-                            onRegistered={() => this.showRegistration(false)}
-                            onBackClick={() => history.goBack()}
-                        />
+                        return (
+                            <RegistrationView
+                                onRegistered={() => this.showRegistration(false)}
+                                onBackClick={() => history.goBack()}
+                            />
+                        )
                     }} />
 
                     <Route exact path="/login" render={() => {
