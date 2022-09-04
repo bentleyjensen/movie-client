@@ -71,12 +71,12 @@ export function LoginView(props) {
                             </Form.Group>
                                 <Row>
                                     <Col>
-                                        <Button variant="primary" type="submit" className="my-3" onClick={handleSubmit}>Login</Button>
-                                    </Col>
-                                    <Col className="text-right">
                                         <Link to="/register">
                                             <Button variant="secondary" type="button" className="text-right my-3">Register</Button>
                                         </Link>
+                                    </Col>
+                                    <Col className="text-right">
+                                        <Button variant="primary" type="submit" className="my-3" onClick={handleSubmit}>Login</Button>
                                     </Col>
                                 </Row>
                             
