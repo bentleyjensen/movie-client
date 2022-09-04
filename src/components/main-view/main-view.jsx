@@ -81,13 +81,19 @@ export class MainView extends React.Component {
                     }} />
 
                     <Route path="/genres/:name" render={({match, history}) => {
-                        return <GenreView genre={match.params.name} onBackClick={() => history.goBack()} />
+                        return <GenreView
+                            genre={match.params.name}
+                            movies={movies.filter(m => m.genre.name == match.params.name)}
+                            onBackClick={() => history.goBack()}
+                        />
                     }} />
 
                     <Route path="/directors/:name" render={({match, history}) => {
-                        <DirectorView director={match.params.name} onBackClick={() => history.goBack()} />
+                        return <DirectorView
+                            director={match.params.name}
+                            movies={movies.filter(m => m.director.name == match.params.name)}
+                            onBackClick={() => history.goBack()} />
                     }} />
-                    
 
                     <Route path="/user" render={() => {
                         const storageToken = localStorage.getItem('token');
