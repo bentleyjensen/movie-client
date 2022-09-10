@@ -9,7 +9,6 @@ export function Navbar(props) {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
                     <Nav.Link href="/">Home</Nav.Link>
-                    <Nav.Link href="/movies">Movies</Nav.Link>
                     <Nav.Link href="/user">Profile</Nav.Link>
                     {props.loggedIn ?
                         <Nav.Link href="/logout">Log Out</Nav.Link>
@@ -18,7 +17,6 @@ export function Navbar(props) {
                     }
                     <NavDropdown title="More" id="basic-nav-dropdown">
                         <NavDropdown.Item href="/">Home</NavDropdown.Item>
-                        <NavDropdown.Item href="/movies">Movies</NavDropdown.Item>
                         <NavDropdown.Item href="/user">Profile</NavDropdown.Item>
                         <NavDropdown.Item href="/logout">Log Out</NavDropdown.Item>
                     </NavDropdown>

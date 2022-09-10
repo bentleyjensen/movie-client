@@ -135,16 +135,15 @@ export function RegistrationView (props) {
             // Send request to create user
             axios.post(`${process.env.API_URL}/user/register`, {
                 username,
-                password1,
+                password: password1,
                 email,
                 birthdate,
             }).then((response) => {
                 console.log(response.data);
-                // window.open('/', '_self');
+                window.open('/login', '_self');
 
             }).catch((err) => {
-                err.response.data.errors[0].msg
-                setSubmitError(<p>{err.message}<br />{err.response.data.errors[0].msg}</p>);
+                setSubmitError(<p>{err.message} - {err.response.data}</p>);
             });
         }
     }

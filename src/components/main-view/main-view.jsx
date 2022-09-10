@@ -20,12 +20,16 @@ export class MainView extends React.Component {
         super();
         this.state = {
             movies: [],
+            favorites: [],
             user: null,
+            username: null,
+            email: null,
+            birthdate: null,
         }
     }
 
     render() {
-        const { movies, user } = this.state;
+        const { movies, favorites } = this.state;
 
         return (
             <Router>
@@ -45,8 +49,7 @@ export class MainView extends React.Component {
                     }} />
 
                     <Route exact path="/register" render={({history}) => {
-                        const token = localStorage.getItem(token);
-                        const user = localStorage.getItem(user);
+                        const token = localStorage.getItem('token');
 
                         if (token) {
                             return <Redirect to="/user"/>;
@@ -72,11 +75,27 @@ export class MainView extends React.Component {
                     </Route>
 
                     <Route path="/movies/:movieId" render={({match, history}) => {
+                        const locatedMovie = this.state.movies.find(m => {
+                            if (m._id === match.params.movieId) {
+                                console.log(`matched movie ${m.title}`)
+                                return true;
+                            }
+                            return false;
+                        })
+
+                        const isFavorite = (this.state.favorites.find(m => m._id === match.params.movieId) !== undefined);
+
                         return (
-                            <MovieView
-                                movie={movies.find(m => m._id === match.params.movieId)}
-                                onBackClick={() => history.goBack() }
-                            />
+                            <>
+                                {!!locatedMovie && <MovieView
+                                    movie={locatedMovie}
+                                    onBackClick={() => history.goBack()}
+                                    onRemoveFavorite={movie => this.removeFavorite(movie)}
+                                    onAddFavorite={movie => this.addFavorite(movie)}
+                                    isFavorite={isFavorite}
+                                />}
+                                {!locatedMovie && <h2>Loading...</h2>}
+                            </>
                         )
                     }} />
 
@@ -102,7 +121,11 @@ export class MainView extends React.Component {
                         if (!storageToken) {
                             return <LoginView onLoggedIn={newUser => this.onLoggedIn(newUser)} />
                         } else {
-                            return <UserView />
+                            return <UserView
+                                onUserUpdated={user => this.onUserUpdated(user)}
+                                getUser={() => this.getUser()}
+                                onBackClick={() => history.goBack()}
+                                onRemoveFavorite={movie => this.removeFavorite(movie)}/>
                         }
                     }} />
                 </Row>
@@ -112,6 +135,7 @@ export class MainView extends React.Component {
 
     componentDidMount() {
         this.getMovies();
+        this.getUser();
     }
 
     onLoggedIn(authData) {
@@ -125,6 +149,37 @@ export class MainView extends React.Component {
         localStorage.setItem('user', authData.username);
     }
 
+    getUser() {
+        const token = localStorage.getItem('token');
+
+        if(!token) {
+            return;
+        }
+
+        axios.get(`${process.env.API_URL}/user`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        }).then((res) => {
+            this.setState({
+                username: res.data.username,
+                email: res.data.email,
+                birthdate: res.data.birthdate.split('T')[0],
+                favorites: res.data.favorites,
+            });
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
+    onUserUpdated(user) {
+        this.setState({
+            user: user.username,
+            email: user.email,
+            birthdate: user.birthdate,
+        });
+    }
+
     onLoggedOut() {
         this.setState({
             user: null,
@@ -134,10 +189,49 @@ export class MainView extends React.Component {
         localStorage.setItem('user',null);
     }
 
+    addFavorite(movie) {
+        console.log(`Adding ${movie.title} to favorites`);
+        axios({
+            method: 'post',
+            baseURL: process.env.API_URL,
+            url: `/user/favorite/${movie._id}`,
+            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+            data: 'random string'
+        })
+        .then((res) => {
+            this.setState({
+                favorites: res.data.favorites,
+            });
+            console.log(res.data.favorites)
+            console.log('favorite added')
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
+    removeFavorite(movie) {
+        console.log(`Removing ${movie.title} from favorites`);
+        axios({
+            method: 'delete',
+            baseURL: process.env.API_URL,
+            url: `/user/favorite/${movie._id}`,
+            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        })
+        .then((res) => {
+            this.setState({
+                favorites: res.data.favorites,
+            });
+            console.log(res.data.favorites)
+            console.log('favorite removed')
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+
     getMovies() {
         axios.get(`${process.env.API_URL}/movies`,)
-        .then((response) => {
-            this.setState({ movies: response.data });
+        .then((res) => {
+            this.setState({ movies: res.data });
         })
         .catch((err) => {
             console.log(err);

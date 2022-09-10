@@ -49,6 +49,7 @@ export function LoginView(props) {
                 token: response.data.token,
                 username,
             });
+            window.open('/user','_self');
         }).catch(err => {
             setLoginError('Invalid username password combination');
         });

@@ -14,14 +14,33 @@ import './movie-view.scss'
 
 export class MovieView extends React.Component {
     render() {
-        const { movie, onBackClick } = this.props;
+        const { movie, onBackClick, onAddFavorite, onRemoveFavorite } = this.props;
+        let { isFavorite } = this.props;
         const imgPath = movie.ImgPath || "";
+        const token = localStorage.getItem('token');
+
+        function addFav(event) {
+            console.log(`adding favorite`)
+            onAddFavorite(movie);
+            isFavorite = true;
+        }
+        
+        function removeFav(event) {
+            console.log(`removing favorite`)
+            onRemoveFavorite(movie);
+            isFavorite = false;
+        }
 
         return (
             <Container>
                 <Row>
                     <Col className="movie-poster my-3" md={3}>
                         <img src={imgPath}/>
+                    </Col>
+                    <Col>
+                        {(token && !isFavorite) && <Button size="md" onClick={addFav}>Add Favorite</Button>}
+                        {(token && isFavorite) && <Button size="md" onClick={removeFav}>Unfavorite</Button>}
+                        {!token && <></>}
                     </Col>
                     <Col className="text-right">
                         <Button size="md" onClick={ () => onBackClick() }>Back</Button>
@@ -59,4 +78,7 @@ MovieView.propTypes = {
         imgPath: PropTypes.string,
     }).isRequired,
     onBackClick: PropTypes.func.isRequired,
+    onRemoveFavorite: PropTypes.func.isRequired,
+    onAddFavorite: PropTypes.func.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
 }
