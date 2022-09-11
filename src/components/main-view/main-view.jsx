@@ -42,7 +42,7 @@ export class MainView extends React.Component {
                     <Route exact path="/" render={() => {
                         if (movies.length === 0) { return }
                         else {
-                            return movies.map(m => <Col md={4} key={m._id} className="my-3">
+                            return movies.map(m => <Col md={3} key={m._id} className="my-3">
                                 <MovieCard key={m._id} movie={m} />
                             </Col>)
                         }

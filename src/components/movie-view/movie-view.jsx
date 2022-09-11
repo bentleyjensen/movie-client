@@ -34,7 +34,7 @@ export class MovieView extends React.Component {
             <Container>
                 <Row>
                     <Col className="movie-poster my-3" md={3}>
-                        <img src={`${process.env.API_URL}/images/${movie._id}`}/>
+                        <img src={`${process.env.API_URL}/images/${movie._id}.jpg`} crossOrigin="anonymous" />
                     </Col>
                     <Col>
                         {(token && !isFavorite) && <Button size="md" onClick={addFav}>Add Favorite</Button>}
