@@ -16,7 +16,6 @@ export class MovieView extends React.Component {
     render() {
         const { movie, onBackClick, onAddFavorite, onRemoveFavorite } = this.props;
         let { isFavorite } = this.props;
-        const imgPath = movie.ImgPath || "";
         const token = localStorage.getItem('token');
 
         function addFav(event) {
@@ -35,7 +34,7 @@ export class MovieView extends React.Component {
             <Container>
                 <Row>
                     <Col className="movie-poster my-3" md={3}>
-                        <img src={imgPath}/>
+                        <img src={`${process.env.API_URL}/images/${movie._id}`}/>
                     </Col>
                     <Col>
                         {(token && !isFavorite) && <Button size="md" onClick={addFav}>Add Favorite</Button>}
@@ -75,7 +74,6 @@ MovieView.propTypes = {
             bio: PropTypes.string,
             movies: PropTypes.array,
         }),
-        imgPath: PropTypes.string,
     }).isRequired,
     onBackClick: PropTypes.func.isRequired,
     onRemoveFavorite: PropTypes.func.isRequired,
