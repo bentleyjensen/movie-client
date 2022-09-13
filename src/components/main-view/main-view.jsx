@@ -77,17 +77,16 @@ export class MainView extends React.Component {
                     <Route path="/movies/:movieId" render={({match, history}) => {
                         const locatedMovie = this.state.movies.find(m => {
                             if (m._id === match.params.movieId) {
-                                console.log(`matched movie ${m.title}`)
                                 return true;
                             }
                             return false;
-                        })
+                        });
 
-                        const isFavorite = (this.state.favorites.find(m => m._id === match.params.movieId) !== undefined);
+                        const isFavorite = this.state.favorites.filter(m => m._id === match.params.movieId).length > 0;
 
                         return (
                             <>
-                                {!!locatedMovie && <MovieView
+                                {locatedMovie && <MovieView
                                     movie={locatedMovie}
                                     onBackClick={() => history.goBack()}
                                     onRemoveFavorite={movie => this.removeFavorite(movie)}
@@ -190,7 +189,6 @@ export class MainView extends React.Component {
     }
 
     addFavorite(movie) {
-        console.log(`Adding ${movie.title} to favorites`);
         axios({
             method: 'post',
             baseURL: process.env.API_URL,
@@ -202,15 +200,12 @@ export class MainView extends React.Component {
             this.setState({
                 favorites: res.data.favorites,
             });
-            console.log(res.data.favorites)
-            console.log('favorite added')
         }).catch((err) => {
             console.log(err);
         });
     }
 
     removeFavorite(movie) {
-        console.log(`Removing ${movie.title} from favorites`);
         axios({
             method: 'delete',
             baseURL: process.env.API_URL,
@@ -221,8 +216,6 @@ export class MainView extends React.Component {
             this.setState({
                 favorites: res.data.favorites,
             });
-            console.log(res.data.favorites)
-            console.log('favorite removed')
         }).catch((err) => {
             console.log(err);
         });
