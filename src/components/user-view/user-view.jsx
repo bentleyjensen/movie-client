@@ -124,7 +124,7 @@ export class UserView extends React.Component {
                         return (
                             <Col md={4} key={m._id} className="my-3">
                                 <MovieCard key={m._id} movie={m}>
-                                    <Button variant="danger" onClick={() => {debugger; console.log('foo');this.props.onRemoveFavorite(m)}}>Remove</Button>
+                                    <Button variant="danger" href="#" onClick={() => {this.props.onRemoveFavorite(m)}}>Remove</Button>
                                 </MovieCard>
                             </Col>
                         )
