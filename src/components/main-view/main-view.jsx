@@ -83,7 +83,9 @@ export class MainView extends React.Component {
                         });
 
                         const isFavorite = this.state.favorites.filter(m => m._id === match.params.movieId).length > 0;
-
+                        console.log(favorites)
+                        console.log('located movie: ',locatedMovie)
+                        console.log('movie is favorite:', isFavorite);
                         return (
                             <>
                                 {locatedMovie && <MovieView
@@ -92,6 +94,7 @@ export class MainView extends React.Component {
                                     onRemoveFavorite={movie => this.removeFavorite(movie)}
                                     onAddFavorite={movie => this.addFavorite(movie)}
                                     isFavorite={isFavorite}
+                                    favorites={favorites}
                                 />}
                                 {!locatedMovie && <h2>Loading...</h2>}
                             </>

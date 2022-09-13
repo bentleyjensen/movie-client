@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Navbar } from '../navbar/navbar';
@@ -13,22 +13,34 @@ import { Link } from 'react-router-dom';
 import './movie-view.scss'
 
 export class MovieView extends React.Component {
-    render() {
-        const { movie, onBackClick, onAddFavorite, onRemoveFavorite } = this.props;
-        let { isFavorite } = this.props;
-        const token = localStorage.getItem('token');
+    constructor(props) {
+        super(props);
 
-        function addFav(event) {
-            console.log(`adding favorite`)
-            onAddFavorite(movie);
-            isFavorite = true;
+        console.log('movie view isFavorite: ', props.isFavorite)
+
+        this.state = {
+            isFavorite: props.isFavorite,
         }
-        
-        function removeFav(event) {
-            console.log(`removing favorite`)
-            onRemoveFavorite(movie);
-            isFavorite = false;
-        }
+    }
+
+    addFav(movie) {
+        this.setState({
+            isFavorite: true,
+        })
+        this.props.onAddFavorite(movie);
+    }
+
+    removeFav(movie) {
+        this.setState({
+            isFavorite: false,
+        })
+        this.props.onRemoveFavorite(movie);
+    }
+
+    render() {
+        const { movie, onBackClick, favorites } = this.props;
+        let { isFavorite } = favorites.filter(m => m._id === movie._id).length > 0;
+        const token = localStorage.getItem('token');
 
         return (
             <Container>
@@ -37,9 +49,9 @@ export class MovieView extends React.Component {
                         <img src={`${process.env.API_URL}/images/${movie._id}.jpg`} crossOrigin="anonymous" />
                     </Col>
                     <Col>
-                        {(token && !isFavorite) && <Button size="md" onClick={addFav}>Add Favorite</Button>}
-                        {(token && isFavorite) && <Button size="md" onClick={removeFav}>Unfavorite</Button>}
-                        {!token && <></>}
+                        {(token && !isFavorite) && <Button size="md" onClick={() => this.addFav(movie)}>Add Favorite</Button>}
+                        {(token && isFavorite) && <Button size="md" onClick={() => this.removeFav(movie)}>Unfavorite</Button>}
+                        {!token && <Button>Log in to add favorites</Button>}
                     </Col>
                     <Col className="text-right">
                         <Button size="md" onClick={ () => onBackClick() }>Back</Button>
