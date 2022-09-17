@@ -49,8 +49,10 @@ export class MovieView extends React.Component {
                         <img src={`${process.env.API_URL}/images/${movie._id}.jpg`} crossOrigin="anonymous" />
                     </Col>
                     <Col>
-                        {(token && !isFavorite) && <Button size="md" onClick={() => this.addFav(movie)}>Add Favorite</Button>}
-                        {(token && isFavorite) && <Button size="md" onClick={() => this.removeFav(movie)}>Unfavorite</Button>}
+                        {token && <>
+                            <Button size="md" className="mx-3" onClick={() => this.addFav(movie)}>Add Favorite</Button>
+                            <Button size="md" onClick={() => this.removeFav(movie)}>Unfavorite</Button>
+                        </>}
                         {!token && <Button>Log in to add favorites</Button>}
                     </Col>
                     <Col className="text-right">
