@@ -17,10 +17,9 @@ export class MovieCard extends React.Component {
                 <Card.Body>
                     <Card.Title>{movie.title}</Card.Title>
                     <Card.Body>{movie.description.slice(0,100)}...</Card.Body>
-                    {!this.props.children && <Link to={`/movies/${movie._id}`}>
+                    <Link to={`/movies/${movie._id}`}>
                         <Button variant="primary">Open</Button>
-                    </Link>}
-                    {!!this.props.children && <div className="text-right">{this.props.children}</div>}
+                    </Link>
                 </Card.Body>
             </Card>
         );
