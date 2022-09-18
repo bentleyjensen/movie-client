@@ -2,7 +2,11 @@ import React from 'react';
 import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import axios from 'axios';
 import 'dotenv/config';
-import { MovieCard } from '../movie-card/movie-card';
+import { connect } from 'react-redux';
+
+import { setMovies } from '../../actions/actions';
+
+import MoviesList from '../movies-list/movies-list';
 import { MovieView } from '../movie-view/movie-view';
 import { LoginView } from '../login-view/login-view';
 import { LogoutView } from '../logout-view/logout-view';
@@ -15,11 +19,16 @@ import { Col, Row } from 'react-bootstrap';
 
 import './main-view.scss';
 
-export class MainView extends React.Component {
+mapStateToProps = state => {
+    return {
+        movies: state.movies
+    }
+}
+
+class MainView extends React.Component {
     constructor() {
         super();
         this.state = {
-            movies: [],
             favorites: [],
             user: null,
             username: null,
@@ -29,7 +38,8 @@ export class MainView extends React.Component {
     }
 
     render() {
-        const { movies, favorites } = this.state;
+        let { movies } = this.props;
+        let { favorites } = this.state;
 
         return (
             <Router>
@@ -40,11 +50,9 @@ export class MainView extends React.Component {
                 </Row>
                 <Row className='justify-content-md-center main-view mt-3 mx-1'>
                     <Route exact path="/" render={() => {
-                        if (movies.length === 0) { return }
+                        if (movies.length === 0) { return <div></div>}
                         else {
-                            return movies.map(m => <Col md={3} key={m._id} className="my-3">
-                                <MovieCard key={m._id} movie={m} />
-                            </Col>)
+                            return <MoviesList movies={movies} />
                         }
                     }} />
 
@@ -227,10 +235,13 @@ export class MainView extends React.Component {
     getMovies() {
         axios.get(`${process.env.API_URL}/movies`,)
         .then((res) => {
-            this.setState({ movies: res.data });
+            console.log('received movies')
+            this.props.setMovies(res.data);
         })
         .catch((err) => {
             console.log(err);
         });
     }
 }
+
+export default connect(mapStateToProps, { setMovies })(MainView);
