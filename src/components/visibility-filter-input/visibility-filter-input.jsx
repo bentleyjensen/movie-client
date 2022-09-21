@@ -1,10 +1,11 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { Form } from "react-bootstrap";
 import { setFilter } from "../../actions/actions";
 
-class visibilityFilterInput extends React.Component {
+class VisibilityFilterInput extends React.Component {
     constructor (props) {
         super(props);
     }
@@ -22,4 +23,8 @@ class visibilityFilterInput extends React.Component {
     }
 }
 
-export default connect(null, {setFilter})(visibilityFilterInput);
+export default connect(null, {setFilter})(VisibilityFilterInput);
+
+VisibilityFilterInput.propTypes = {
+    setFilter: PropTypes.func,
+}

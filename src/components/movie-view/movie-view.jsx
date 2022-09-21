@@ -147,4 +147,5 @@ MovieView.propTypes = {
             movies: PropTypes.array,
         }),
     }).isRequired,
+    setUSer: PropTypes.func,
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import axios from "axios";
 import { connect } from 'react-redux';
 import { setUser } from "../../actions/actions";
@@ -358,3 +359,7 @@ class UserView extends React.Component {
 }
 
 export default connect(mapStateToProps, { setUser })(UserView);
+
+UserView.propTypes = {
+    setUSer: PropTypes.func,
+}

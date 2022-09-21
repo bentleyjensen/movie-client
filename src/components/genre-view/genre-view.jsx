@@ -49,4 +49,5 @@ export default connect(mapStateToProps)(GenreView);
 GenreView.propTypes = {
     genre: PropTypes.string.isRequired,
     movies: PropTypes.array,
+    visibilityFilter: PropTypes.string,
 }

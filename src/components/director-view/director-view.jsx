@@ -47,4 +47,5 @@ export default connect(mapStateToProps)(DirectorView)
 DirectorView.propTypes = {
     director: PropTypes.string.isRequired,
     movies: PropTypes.array,
+    visibilityFilter: PropTypes.string,
 };

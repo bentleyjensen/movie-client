@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -36,3 +37,7 @@ function LogoutView(props) {
 }
 
 export default connect(null, { setUser })(LogoutView);
+
+LogoutView.propTypes = {
+    setUSer: PropTypes.func,
+}
