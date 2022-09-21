@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import axios from 'axios';
-
-import { Navbar } from '../navbar/navbar';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -178,7 +175,7 @@ export function RegistrationView (props) {
                             <Form.Control type="text" value={birthdate} onChange={event => { setBirthdate(event.target.value); checkBirthdate(event.target.value)}} />
                             {birthdateMessage && <Form.Text id="birthdate-error" className="text-danger">{birthdateMessage}</Form.Text>}
                         </Form.Group>
-                        <Button type="button" variant="secondary" className="mt-3" onClick={() => props.onBackClick(false)}>Back</Button>
+                        <Button type="button" variant="secondary" className="mt-3" onClick={() => window.history.back()}>Back</Button>
                         <Button type="submit" className="mt-3 float-right" onClick={handleSubmit}>Submit</Button>
                         <Form.Text id="submit-error" className="text-danger">{submitError}</Form.Text>
                     </Form>
@@ -186,9 +183,4 @@ export function RegistrationView (props) {
             </Row>
         </Container>
     )
-}
-
-RegistrationView.propTypes = {
-    onRegistered: PropTypes.func,
-    onBackClick: PropTypes.func,
 }

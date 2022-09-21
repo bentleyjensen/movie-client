@@ -1,54 +1,48 @@
 import React from "react";
+import { connect } from 'react-redux';
 import { PropTypes } from "prop-types";
-
-import { MovieCard } from "../movie-card/movie-card";
-
 import { Container, Row, Col, Button } from "react-bootstrap";
 
-export class DirectorView extends React.Component {
+import MoviesList from "../movies-list/movies-list";
+
+const mapStateToProps = state => {
+    const { visibilityFilter } = state;
+    return { visibilityFilter };
+}
+
+class DirectorView extends React.Component {
     constructor(props) {
         super(props);
     }
 
     render() {
-        const { director, movies } = this.props;
-        return(
+        const { director, movies, visibilityFilter } = this.props;
+        let filteredMovies = movies;
+
+        if (visibilityFilter !== '') {
+            filteredMovies = movies.filter(m => m.title.toLowerCase().includes(visibilityFilter.toLowerCase()))
+        }
+
+        return (
             <Container>
                 <Row>
                     <Col>
-                        <h1 className="text-center">Movies directed by {director}</h1>
+                        <h2 className="text-center">Movies directed by {director}</h2>
                     </Col>
                     <Col md={1}>
-                        <Button variant="primary" onClick={() => this.props.onBackClick()}>Back</Button>
+                        <Button variant="primary" onClick={() => window.history.back()}>Back</Button>
                     </Col>
                 </Row>
-                <Row>
-                    {movies.length === 0 && <Col><p>No movies Found</p></Col>}
-                    {movies.map(m => {
-                        return (
-                            <Col md={4} key={m._id} className="my-3">
-                                <MovieCard key={m._id} movie={m} />
-                            </Col>
-                        );
-                    })}
+                <Row className='justify-content-md-center mt-3 mx-1'>
+                    {(!filteredMovies || movies.length === 0) && <h3 className="text-center">No movies found</h3>}
+                    {filteredMovies && <MoviesList movies={filteredMovies} />}
                 </Row>
             </Container>
-
-        )
+        );
     }
-
-    // getMovies() {
-    //     axios.get(`${process.env.API_URL}/directors/${this.props.director}`)
-    //     .then((result) => {
-    //         if (result && result.name) {
-    //             this.setState({director: result.data})
-    //         }
-    //     }).catch((err) => {
-    //         console.log('Error fetching movies:');
-    //         console.log(err);
-    //     })
-    // }
 }
+
+export default connect(mapStateToProps)(DirectorView)
 
 DirectorView.propTypes = {
     director: PropTypes.string.isRequired,

@@ -1,20 +1,27 @@
 import React from "react";
 import axios from "axios";
+import { connect } from 'react-redux';
+import { setUser } from "../../actions/actions";
 
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import { MovieCard } from "../movie-card/movie-card";
 
-export class UserView extends React.Component {
+function mapStateToProps(state = {}) {
+    return {
+        user: state.user
+    }
+}
+
+class UserView extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            username: '',
-            email: '',
-            birthdate: '',
-            password1: '',
-            password2: '',
-            favorites: '',
+            usernameField: '',
+            emailField: '',
+            birthdateField: '',
+            password1Field: '',
+            password2Field: '',
 
             errGetUser: '',
             errUpdateUser: '',
@@ -29,20 +36,26 @@ export class UserView extends React.Component {
     }
 
     render() {
-        const favorites = this.state.favorites;
-        const user = this.state;
+        const user = this.props.user;
+        const {
+            usernameField,
+            emailField,
+            birthdateField,
+            password1Field,
+            password2Field
+        } = this.state;
 
         if (Object.keys(user).length === 0) {
             return (
                 <Container>
                     <Row>
                         <Col>
-                            <h2><i className="bi bi-chevron-left" onClick={() => this.props.onBackClick()}></i> Profile</h2>
+                            <h2><i className="bi bi-chevron-left" onClick={() => window.history.back()}></i> Profile</h2>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <h3>Loading...</h3>
+                            <h3 className='text-center'>Loading...</h3>
                         </Col>
                     </Row>
                 </Container>
@@ -66,35 +79,35 @@ export class UserView extends React.Component {
                                 <Form.Group as={Row} className="my-2">
                                     <Form.Label as={Col}>Username:</Form.Label>
                                     <Col>
-                                        <Form.Control type="text" value={user.username} onChange={(event) => { this.setState({username: event.target.value}); this.checkUsername(event.target.value); }} />
+                                        <Form.Control type="text" value={usernameField} onChange={(event) => { this.setState({usernameField: event.target.value}); this.checkUsername(event.target.value); }} />
                                     </Col>
                                 </Form.Group>
                                 {!!this.state.errUsername && <Row><Form.Text as={Col} id="username-error" className="text-danger text-right">{this.state.errUsername}</Form.Text></Row>}
                                 <Form.Group as={Row} className="my-2">
                                     <Form.Label as={Col}>Email Address:</Form.Label>
                                     <Col>
-                                        <Form.Control type="email" value={user.email} onChange={(event) => {this.setState({email: event.target.value}); this.checkEmail(event.target.value)}}/>
+                                        <Form.Control type="email" value={emailField} onChange={(event) => { this.setState({ emailField: event.target.value}); this.checkEmail(event.target.value)}}/>
                                     </Col>
                                 </Form.Group>
                                 {!!this.state.errEmail && <Row><Form.Text as={Col} id="email-error" className="text-danger text-right">{this.state.errEmail}</Form.Text></Row>}
                                 <Form.Group as={Row} className="my-2">
                                     <Form.Label as={Col}>Birthdate (yyyy-mm-dd):</Form.Label>
                                     <Col>
-                                        <Form.Control type="text" value={user.birthdate} onChange={(event) => {this.setState({birthdate: event.target.value}); this.checkBirthdate(event.target.value)}}/>
+                                        <Form.Control type="text" value={birthdateField} onChange={(event) => { this.setState({ birthdateField: event.target.value}); this.checkBirthdate(event.target.value)}}/>
                                     </Col>
                                 </Form.Group>
                                 {!!this.state.errBirthdate && <Row><Form.Text as={Col} id="birthdate-error" className="text-danger text-right">{this.state.errBirthdate}</Form.Text></Row>}
                                 <Form.Group as={Row} className="my-2">
                                     <Form.Label as={Col}>New Password:</Form.Label>
                                     <Col>
-                                        <Form.Control type="password" value={user.password1} onChange={(event) => {this.setState({password1: event.target.value}); this.checkPassword1(event.target.value)}}/>
+                                        <Form.Control type="password" value={password1Field} onChange={(event) => { this.setState({ password1Field: event.target.value}); this.checkPassword1(event.target.value)}}/>
                                     </Col>
                                 </Form.Group>
                                 {!!this.state.errPassword1 && <Row><Form.Text as={Col} id="password1-error" className="text-danger text-right">{this.state.errPassword1}</Form.Text></Row>}
                                 <Form.Group as={Row} className="my-2">
                                     <Form.Label as={Col}>Confirm New Password:</Form.Label>
                                     <Col>
-                                        <Form.Control type="password" value={user.password2} onChange={(event) => {this.setState({password2: event.target.value}); this.checkPassword2(event.target.value)}}/>
+                                        <Form.Control type="password" value={password2Field} onChange={(event) => { this.setState({ password2Field: event.target.value}); this.checkPassword2(event.target.value)}}/>
                                     </Col>
                                 </Form.Group>
                                 {!!this.state.errPassword2 && <Row><Form.Text as={Col} id="password2-error" className="text-danger text-right">{this.state.errPassword2}</Form.Text></Row>}
@@ -119,13 +132,11 @@ export class UserView extends React.Component {
                     </Col>
                 </Row>
                 <Row>
-                    {(!favorites || favorites.length === 0) && <p>You don't have any favorites yet!</p>}
-                    {(favorites && favorites.length > 0) && favorites.map(m => {
+                    {(!user.favorites || user.favorites.length === 0) && <p>You don't have any favorites yet!</p>}
+                    {(user.favorites && user.favorites.length > 0) && user.favorites.map(m => {
                         return (
                             <Col md={4} key={m._id} className="my-3">
-                                <MovieCard key={m._id} movie={m}>
-                                    <Button variant="danger" href="#" onClick={() => {this.props.onRemoveFavorite(m)}}>Remove</Button>
-                                </MovieCard>
+                                <MovieCard key={m._id} movie={m} />
                             </Col>
                         )
                     })}
@@ -149,13 +160,14 @@ export class UserView extends React.Component {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
-        }).then((res) => {
+        }).then((response) => {
             this.setState({
-                username: res.data.username,
-                email: res.data.email,
-                birthdate: res.data.birthdate.split('T')[0],
-                favorites: res.data.favorites,
+                usernameField: response.data.username,
+                emailField: response.data.email,
+                birthdateField: response.data.birthdate.split('T')[0],
+                favoritesField: response.data.favorites,
             });
+            this.props.setUser(response.data)
         }).catch((err) => {
             console.log(err);
         });
@@ -172,20 +184,17 @@ export class UserView extends React.Component {
 
         axios.put(`${process.env.API_URL}/user`, user, updateOpts)
         .then((response) => {
+            console.log('response received, user updated')
+            console.log(response.data);
             this.setState({
                 errSubmit: 'Updated successfully'
             })
-            this.props.onUserUpdated({
-                username: response.data.username,
-                email: response.data.email,
-                birthdate: response.data.birthdate,
-                favorites: response.data.favorites,
-            });
+            // this.props.setUser(response.data);
             
         })
         .catch((err) => {
             console.log(err);
-            if (err.response.data) {
+            if (err.response?.data) {
                 this.setState({
                     errSubmit: err.response.data
                 })
@@ -206,12 +215,7 @@ export class UserView extends React.Component {
         })
         .then((response) => {
             localStorage.clear();
-            this.props.onUserUpdated({
-                username: '',
-                email: '',
-                birthdate: '',
-                favorites: '',
-            });
+            this.props.setUser({});
             window.open('/', '_self');
         }).catch((err) => {
             this.setState({
@@ -223,30 +227,34 @@ export class UserView extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        this.setState({
+            errSubmit: 'Loading...'
+        })
 
-        const { username,
-            email,
-            birthdate,
-            password1,
-            password2,
+        const { usernameField,
+            emailField,
+            birthdateField,
+            password1Field,
+            password2Field,
             } = this.state;
 
-        const validUsername = this.checkUsername(username);
-        const validEmail = this.checkEmail(email);
-        const validBirthdate = this.checkBirthdate(birthdate);
-        const validPassword1 = this.checkPassword1(password1, false);
-        const validPassword2 = this.checkPassword2(password2, false);
+        const validUsername = this.checkUsername(usernameField);
+        const validEmail = this.checkEmail(emailField);
+        const validBirthdate = this.checkBirthdate(birthdateField);
+        const validPassword1 = this.checkPassword1(password1Field, false);
+        const validPassword2 = this.checkPassword2(password2Field, false);
         const useNewPassword = validPassword1 && validPassword2;
 
         const updatedUser = {
-            username: username,
-            email: email,
-            birthdate: birthdate,
+            username: usernameField,
+            email: emailField,
+            birthdate: birthdateField,
         }
 
         let validPassword = () => {
             // Password is valid if we're missing either
-            if (!password1 || !password2) {
+            // Because this is always run, even if useNewPassword is falsy
+            if (!password1Field || !password2Field) {
                 return true;
             }
             // Password is valid if both checks pass, which means we have both
@@ -258,7 +266,7 @@ export class UserView extends React.Component {
         };
 
         if (useNewPassword) {
-            updatedUser.password = password1;
+            updatedUser.password = password1Field;
         }
 
         if (validUsername && validEmail && validBirthdate && validPassword()) {
@@ -269,6 +277,11 @@ export class UserView extends React.Component {
             console.log('validEmail:      ', validEmail)
             console.log('validBirthdate:  ', validBirthdate)
             console.log('validPassword(): ', validPassword())
+            console.log('validPassword1: ', validPassword1)
+            console.log('validPassword2: ', validPassword2)
+            console.log('useNewPassword: ', useNewPassword)
+            console.log('password1Field: ', password1Field)
+            console.log('password2Field: ', password2Field)
         }
     }
 
@@ -319,7 +332,7 @@ export class UserView extends React.Component {
     }
     
     checkPassword2(password2, showErr = true) {
-        const isValid = password2 === this.state.password1;
+        const isValid = password2 === this.state.password1Field;
 
         if (isValid) {
             this.setState({ errPassword2: '' })
@@ -327,8 +340,7 @@ export class UserView extends React.Component {
             this.setState({ errPassword2: 'Passwords do not match' });
         }
 
-
-        return password2 === this.state.password1;
+        return isValid;
     }
 
     checkBirthdate(birthdate) {
@@ -343,5 +355,6 @@ export class UserView extends React.Component {
 
         return isValid;
     }
-    
 }
+
+export default connect(mapStateToProps, { setUser })(UserView);
