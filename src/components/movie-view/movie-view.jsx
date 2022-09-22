@@ -50,30 +50,35 @@ class MovieView extends React.Component {
         return (
             <Container>
                 <Row>
-                    <Col className='movie-poster my-3' md={3}>
-                        <img src={`${process.env.API_URL}/images/${movie._id}.jpg`} crossOrigin='anonymous' />
+                    <Col md={'auto'}>
+                        <h1>
+                            <i className='bi bi-chevron-left' onClick={() => window.history.back()} /> {movie.title}
+                        </h1>
                     </Col>
-                    <Col>
+                    <Col className='float-right'>
                         {token && <>
                             {/* isFavorite does not auto-update on change, so disable button siwtching for now */}
                             {/* <p>isFavorite (not accurate): {isFavorite? 'true' : 'false'}</p> */}
-                            <Button size='md' className='mx-3' onClick={() => this.addFavorite(movie)}>Add Favorite</Button>
-                            <Button size='md' onClick={() => this.removeFavorite(movie)}>Unfavorite</Button>
-                            {this.state.favoriteMessage && <p className='text-danger'>{this.state.favoriteMessage}</p> }
+                            <Button size='md' className='mr-sm-3 float-left' onClick={() => this.addFavorite(movie)}>Add Favorite</Button>
+                            <Button size='md' className='float-left' onClick={() => this.removeFavorite(movie)}>Unfavorite</Button>
+                            {this.state.favoriteMessage && <p className='text-danger'>{this.state.favoriteMessage}</p>}
                         </>}
                         {!token && <Button>Log in to add favorites</Button>}
                     </Col>
                     <Col className='text-right'>
-                        <Button size='md' onClick={() => window.history.back() }>Back</Button>
+                        <Button size='md' onClick={() => window.open('/user', '_self')}>Profile</Button>
                     </Col>
                 </Row>
-                <Row className='movie-view'>
-                    <Col md={9}></Col>
-                    <Col md={12}>
-                        <h1>{movie.title}</h1>
-                            <p className='text-muted my-0'>{movie.year} <Link to={`/genres/${movie.genre.name}`}>{movie.genre.name}</Link></p>
-                            <p className='text-muted'>Directed by <Link to={`/directors/${movie.director.name}`}>{movie.director.name}</Link></p>
+                <Row className='movie-view h-100 my-3'>
+                    <Col>
+                        <h3 className='text-muted my-0'>{movie.year} <Link to={`/genres/${movie.genre.name}`}>{movie.genre.name}</Link></h3>
+                        <h3 className='text-muted'>Directed by <Link to={`/directors/${movie.director.name}`}>{movie.director.name}</Link></h3>
+                        <h2 className='my-3'>Description</h2>
                         <p className='text-dark'>{movie.description}</p>
+                    </Col>
+
+                    <Col className='movie-poster my-3 h-100' md={5}>
+                        <img className='float-right mw-100 mh-100' src={`${process.env.API_URL}/images/${movie._id}.jpg`} crossOrigin='anonymous' />
                     </Col>
                 </Row>
             </Container>
