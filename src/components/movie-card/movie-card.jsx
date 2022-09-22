@@ -12,13 +12,13 @@ export class MovieCard extends React.Component {
         const { movie } = this.props;
 
         return (
-            <Card className="justify-content-center" onClick={() => { window.open(`/movies/${movie._id}`, '_self')}}>
-                <Card.Img style={{ 'minHeight': '150px' }} crossOrigin="anonymous" className="mx-auto" variant="top" src={`${process.env.API_URL}/images/${movie._id}.jpg`} alt={movie.title + ' poster'} />
+            <Card className='justify-content-center' onClick={() => { window.open(`/movies/${movie._id}`, '_self')}}>
+                <Card.Img style={{ 'minHeight': '150px' }} crossOrigin='anonymous' className='mx-auto' variant='top' src={`${process.env.API_URL}/images/${movie._id}.jpg`} alt={movie.title + ' poster'} />
                 <Card.Body>
                     <Card.Title>{movie.title}</Card.Title>
                     <Card.Body>{movie.description.slice(0,100)}...</Card.Body>
                     <Link to={`/movies/${movie._id}`}>
-                        <Button variant="primary">Open</Button>
+                        <Button variant='primary'>Open</Button>
                     </Link>
                 </Card.Body>
             </Card>
