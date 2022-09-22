@@ -147,37 +147,37 @@ export function RegistrationView (props) {
 
     return (
         <Container>
-            <Row className="registration-container justify-content-md-center">
-                <Col className="mx-auto" md={4}>
+            <Row className='registration-container justify-content-md-center'>
+                <Col className='mx-auto' md={4}>
                     <Form>
                         <Form.Group>
                             <Form.Label>Username:</Form.Label>
-                            <Form.Control type="text" value={username} onChange={event => { setUsername(event.target.value); checkUsername(event.target.value) }}/>
-                            {usernameMessage && <Form.Text id="username-error" className="text-danger">{usernameMessage}</Form.Text>}
+                            <Form.Control type='text' value={username} onChange={event => { setUsername(event.target.value); checkUsername(event.target.value) }}/>
+                            {usernameMessage && <Form.Text id='username-error' className='text-danger'>{usernameMessage}</Form.Text>}
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Password:</Form.Label>
-                            <Form.Control type="password" value={password1} onChange={event => { setPassword1(event.target.value); checkStrongPassword(event.target.value); }} />
-                            {strongPasswordMessage && <Form.Text id="password1-error" className="text-danger">{strongPasswordMessage}</Form.Text>}
+                            <Form.Control type='password' value={password1} onChange={event => { setPassword1(event.target.value); checkStrongPassword(event.target.value); }} />
+                            {strongPasswordMessage && <Form.Text id='password1-error' className='text-danger'>{strongPasswordMessage}</Form.Text>}
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Confirm Password:</Form.Label>
-                            <Form.Control type="password" value={password2} onChange={event => { setPassword2(event.target.value); checkPasswordMatch(event.target.value) }} />
-                            {passwordMatchMessage && <Form.Text id="password2-error" className="text-danger">{passwordMatchMessage}</Form.Text>}
+                            <Form.Control type='password' value={password2} onChange={event => { setPassword2(event.target.value); checkPasswordMatch(event.target.value) }} />
+                            {passwordMatchMessage && <Form.Text id='password2-error' className='text-danger'>{passwordMatchMessage}</Form.Text>}
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Email Address:</Form.Label>
-                            <Form.Control type="text" value={email} onChange={event => { setEmail(event.target.value); checkEmail(event.target.value)}} />
-                            {emailMessage && <Form.Text id="email-error" className="text-danger">{emailMessage}</Form.Text>}
+                            <Form.Control type='text' value={email} onChange={event => { setEmail(event.target.value); checkEmail(event.target.value)}} />
+                            {emailMessage && <Form.Text id='email-error' className='text-danger'>{emailMessage}</Form.Text>}
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Birthdate (yyyy-mm-dd):</Form.Label>
-                            <Form.Control type="text" value={birthdate} onChange={event => { setBirthdate(event.target.value); checkBirthdate(event.target.value)}} />
-                            {birthdateMessage && <Form.Text id="birthdate-error" className="text-danger">{birthdateMessage}</Form.Text>}
+                            <Form.Control type='text' value={birthdate} onChange={event => { setBirthdate(event.target.value); checkBirthdate(event.target.value)}} />
+                            {birthdateMessage && <Form.Text id='birthdate-error' className='text-danger'>{birthdateMessage}</Form.Text>}
                         </Form.Group>
-                        <Button type="button" variant="secondary" className="mt-3" onClick={() => window.history.back()}>Back</Button>
-                        <Button type="submit" className="mt-3 float-right" onClick={handleSubmit}>Submit</Button>
-                        <Form.Text id="submit-error" className="text-danger">{submitError}</Form.Text>
+                        <Button type='button' variant='secondary' className='mt-3' onClick={() => window.history.back()}>Back</Button>
+                        <Button type='submit' className='mt-3 float-right' onClick={handleSubmit}>Submit</Button>
+                        <Form.Text id='submit-error' className='text-danger'>{submitError}</Form.Text>
                     </Form>
                 </Col>
             </Row>

@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { Form } from "react-bootstrap";
-import { setFilter } from "../../actions/actions";
+import { Form } from 'react-bootstrap';
+import { setFilter } from '../../actions/actions';
 
 class VisibilityFilterInput extends React.Component {
     constructor (props) {
@@ -18,7 +18,7 @@ class VisibilityFilterInput extends React.Component {
         return ( <Form.Control
             onChange={e => this.props.setFilter(e.target.value)}
             value={this.props.visibilityFilter}
-            placeholder="Search" />
+            placeholder='Search' />
         )
     }
 }

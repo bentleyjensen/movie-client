@@ -53,31 +53,31 @@ export function LoginView(props) {
 
     return ( 
         <Container>
-            <Row className="justify-content-md-center mt-5">
+            <Row className='justify-content-md-center mt-5'>
                 <Col />
-                <Col md={4} className="justify-content-md-center mt-5">
+                <Col md={4} className='justify-content-md-center mt-5'>
                     <Container fluid>
                         <Form>
-                            <Form.Group controlId="form-username">
+                            <Form.Group controlId='form-username'>
                                 <Form.Label>Username:</Form.Label>
-                                <Form.Control type="text" onChange={event => setUsername(event.target.value)} />
+                                <Form.Control type='text' onChange={event => setUsername(event.target.value)} />
                             </Form.Group>
-                            <Form.Group controlId="form-password">
+                            <Form.Group controlId='form-password'>
                                 <Form.Label>Password:</Form.Label>
-                                <Form.Control type="password" onChange={event => setPassword(event.target.value)} />
+                                <Form.Control type='password' onChange={event => setPassword(event.target.value)} />
                             </Form.Group>
                                 <Row>
                                     <Col>
-                                        <Link to="/register">
-                                            <Button variant="secondary" type="button" className="text-right my-3">Register</Button>
+                                        <Link to='/register'>
+                                            <Button variant='secondary' type='button' className='text-right my-3'>Register</Button>
                                         </Link>
                                     </Col>
-                                    <Col className="text-right">
-                                        <Button variant="primary" type="submit" className="my-3" onClick={handleSubmit}>Login</Button>
+                                    <Col className='text-right'>
+                                        <Button variant='primary' type='submit' className='my-3' onClick={handleSubmit}>Login</Button>
                                     </Col>
                                 </Row>
                             
-                            <Form.Text className="text-danger">{loginError}</Form.Text>
+                            <Form.Text className='text-danger'>{loginError}</Form.Text>
                         </Form>
                     </Container>
                 </Col>

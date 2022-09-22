@@ -31,7 +31,7 @@ function MoviesList(props) {
 
     return <>
         <Row>
-            <Col md={12} className="mt-3 mb-5">
+            <Col md={12} className='mt-3 mb-5'>
                 <VisibilityFilterInput visibilityFilter={visibilityFilter} />
             </Col>
         </Row>

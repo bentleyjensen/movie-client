@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 import { connect } from 'react-redux';
-import { PropTypes } from "prop-types";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { PropTypes } from 'prop-types';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 
-import MoviesList from "../movies-list/movies-list";
+import MoviesList from '../movies-list/movies-list';
 
 const mapStateToProps = state => {
     const { visibilityFilter } = state;
@@ -27,14 +27,14 @@ class DirectorView extends React.Component {
             <Container>
                 <Row>
                     <Col>
-                        <h2 className="text-center">Movies directed by {director}</h2>
+                        <h2 className='text-center'>Movies directed by {director}</h2>
                     </Col>
                     <Col md={1}>
-                        <Button variant="primary" onClick={() => window.history.back()}>Back</Button>
+                        <Button variant='primary' onClick={() => window.history.back()}>Back</Button>
                     </Col>
                 </Row>
                 <Row className='justify-content-md-center mt-3 mx-1'>
-                    {(!filteredMovies || movies.length === 0) && <h3 className="text-center">No movies found</h3>}
+                    {(!filteredMovies || movies.length === 0) && <h3 className='text-center'>No movies found</h3>}
                     {filteredMovies && <MoviesList movies={filteredMovies} />}
                 </Row>
             </Container>

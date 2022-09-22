@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 import PropTypes from 'prop-types';
-import axios from "axios";
+import axios from 'axios';
 import { connect } from 'react-redux';
-import { setUser } from "../../actions/actions";
+import { setUser } from '../../actions/actions';
 
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
-import { MovieCard } from "../movie-card/movie-card";
+import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import { MovieCard } from '../movie-card/movie-card';
 
 function mapStateToProps(state = {}) {
     return {
@@ -51,7 +51,7 @@ class UserView extends React.Component {
                 <Container>
                     <Row>
                         <Col>
-                            <h2><i className="bi bi-chevron-left" onClick={() => window.history.back()}></i> Profile</h2>
+                            <h2><i className='bi bi-chevron-left' onClick={() => window.history.back()}></i> Profile</h2>
                         </Col>
                     </Row>
                     <Row>
@@ -67,64 +67,64 @@ class UserView extends React.Component {
             <Container>
                 <Row>
                     <Col>
-                        <h2><span onClick={() => window.history.back()}><i className="bi bi-chevron-left"></i></span> Profile</h2>
-                        {this.state.errGetUser && <p className="text-danger">{this.state.errGetUser}</p>}
-                        {this.state.errUpdateUser && <p className="text-danger">{this.state.errUpdateUser}</p>}
-                        {this.state.errDeleteUser && <p className="text-danger">{this.state.errDeleteUser}</p>}
+                        <h2><span onClick={() => window.history.back()}><i className='bi bi-chevron-left'></i></span> Profile</h2>
+                        {this.state.errGetUser && <p className='text-danger'>{this.state.errGetUser}</p>}
+                        {this.state.errUpdateUser && <p className='text-danger'>{this.state.errUpdateUser}</p>}
+                        {this.state.errDeleteUser && <p className='text-danger'>{this.state.errDeleteUser}</p>}
                     </Col>
                 </Row>
                 <Row>
                     <Col md={6}>
                         <Container>
                             <Form>
-                                <Form.Group as={Row} className="my-2">
+                                <Form.Group as={Row} className='my-2'>
                                     <Form.Label as={Col}>Username:</Form.Label>
                                     <Col>
-                                        <Form.Control type="text" value={usernameField} onChange={(event) => { this.setState({usernameField: event.target.value}); this.checkUsername(event.target.value); }} />
+                                        <Form.Control type='text' value={usernameField} onChange={(event) => { this.setState({usernameField: event.target.value}); this.checkUsername(event.target.value); }} />
                                     </Col>
                                 </Form.Group>
-                                {!!this.state.errUsername && <Row><Form.Text as={Col} id="username-error" className="text-danger text-right">{this.state.errUsername}</Form.Text></Row>}
-                                <Form.Group as={Row} className="my-2">
+                                {!!this.state.errUsername && <Row><Form.Text as={Col} id='username-error' className='text-danger text-right'>{this.state.errUsername}</Form.Text></Row>}
+                                <Form.Group as={Row} className='my-2'>
                                     <Form.Label as={Col}>Email Address:</Form.Label>
                                     <Col>
-                                        <Form.Control type="email" value={emailField} onChange={(event) => { this.setState({ emailField: event.target.value}); this.checkEmail(event.target.value)}}/>
+                                        <Form.Control type='email' value={emailField} onChange={(event) => { this.setState({ emailField: event.target.value}); this.checkEmail(event.target.value)}}/>
                                     </Col>
                                 </Form.Group>
-                                {!!this.state.errEmail && <Row><Form.Text as={Col} id="email-error" className="text-danger text-right">{this.state.errEmail}</Form.Text></Row>}
-                                <Form.Group as={Row} className="my-2">
+                                {!!this.state.errEmail && <Row><Form.Text as={Col} id='email-error' className='text-danger text-right'>{this.state.errEmail}</Form.Text></Row>}
+                                <Form.Group as={Row} className='my-2'>
                                     <Form.Label as={Col}>Birthdate (yyyy-mm-dd):</Form.Label>
                                     <Col>
-                                        <Form.Control type="text" value={birthdateField} onChange={(event) => { this.setState({ birthdateField: event.target.value}); this.checkBirthdate(event.target.value)}}/>
+                                        <Form.Control type='text' value={birthdateField} onChange={(event) => { this.setState({ birthdateField: event.target.value}); this.checkBirthdate(event.target.value)}}/>
                                     </Col>
                                 </Form.Group>
-                                {!!this.state.errBirthdate && <Row><Form.Text as={Col} id="birthdate-error" className="text-danger text-right">{this.state.errBirthdate}</Form.Text></Row>}
-                                <Form.Group as={Row} className="my-2">
+                                {!!this.state.errBirthdate && <Row><Form.Text as={Col} id='birthdate-error' className='text-danger text-right'>{this.state.errBirthdate}</Form.Text></Row>}
+                                <Form.Group as={Row} className='my-2'>
                                     <Form.Label as={Col}>New Password:</Form.Label>
                                     <Col>
-                                        <Form.Control type="password" value={password1Field} onChange={(event) => { this.setState({ password1Field: event.target.value}); this.checkPassword1(event.target.value)}}/>
+                                        <Form.Control type='password' value={password1Field} onChange={(event) => { this.setState({ password1Field: event.target.value}); this.checkPassword1(event.target.value)}}/>
                                     </Col>
                                 </Form.Group>
-                                {!!this.state.errPassword1 && <Row><Form.Text as={Col} id="password1-error" className="text-danger text-right">{this.state.errPassword1}</Form.Text></Row>}
-                                <Form.Group as={Row} className="my-2">
+                                {!!this.state.errPassword1 && <Row><Form.Text as={Col} id='password1-error' className='text-danger text-right'>{this.state.errPassword1}</Form.Text></Row>}
+                                <Form.Group as={Row} className='my-2'>
                                     <Form.Label as={Col}>Confirm New Password:</Form.Label>
                                     <Col>
-                                        <Form.Control type="password" value={password2Field} onChange={(event) => { this.setState({ password2Field: event.target.value}); this.checkPassword2(event.target.value)}}/>
+                                        <Form.Control type='password' value={password2Field} onChange={(event) => { this.setState({ password2Field: event.target.value}); this.checkPassword2(event.target.value)}}/>
                                     </Col>
                                 </Form.Group>
-                                {!!this.state.errPassword2 && <Row><Form.Text as={Col} id="password2-error" className="text-danger text-right">{this.state.errPassword2}</Form.Text></Row>}
+                                {!!this.state.errPassword2 && <Row><Form.Text as={Col} id='password2-error' className='text-danger text-right'>{this.state.errPassword2}</Form.Text></Row>}
                                 <Row>
                                     <Col className='text-right'>
-                                        <Button type="submit" className="mt-3 float-right" onClick={(e) => this.handleSubmit(e)}>Update</Button>
+                                        <Button type='submit' className='mt-3 float-right' onClick={(e) => this.handleSubmit(e)}>Update</Button>
                                     </Col>
                                 </Row>
                                 <Row>
-                                    {!!this.state.errSubmit && <Form.Text as={Col} id="submit-error" className="text-danger text-right"><p>{this.state.errSubmit}</p></Form.Text>}
+                                    {!!this.state.errSubmit && <Form.Text as={Col} id='submit-error' className='text-danger text-right'><p>{this.state.errSubmit}</p></Form.Text>}
                                 </Row>
                             </Form>
                         </Container>
                     </Col>
-                    <Col md={5} className="my-2">
-                        <Button variant="danger" onClick={() => {this.deleteUser()}}>Delete User</Button>
+                    <Col md={5} className='my-2'>
+                        <Button variant='danger' onClick={() => {this.deleteUser()}}>Delete User</Button>
                     </Col>
                 </Row>
                 <Row>
@@ -136,7 +136,7 @@ class UserView extends React.Component {
                     {(!user.favorites || user.favorites.length === 0) && <p>You don't have any favorites yet!</p>}
                     {(user.favorites && user.favorites.length > 0) && user.favorites.map(m => {
                         return (
-                            <Col md={4} key={m._id} className="my-3">
+                            <Col md={4} key={m._id} className='my-3'>
                                 <MovieCard key={m._id} movie={m} />
                             </Col>
                         )
