@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 
-export function Navbar() {
+export default function Navbar() {
     const loggedIn = localStorage.getItem('token');
     return (
         <Navbar expand='lg' bg='dark' variant='dark' md={12}>
