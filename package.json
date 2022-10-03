@@ -21,6 +21,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",
+    "parcel": "^2.0.0-rc.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
@@ -35,5 +36,6 @@
     "npm": "8.x"
   },
   "devDependencies": {
+    "@parcel/transformer-sass": "^2.0.0-rc.0"
   }
 }
